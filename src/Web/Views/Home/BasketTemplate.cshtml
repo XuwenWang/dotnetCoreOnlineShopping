@@ -1,0 +1,35 @@
+﻿<div class="row">
+    <div class="col-xs-6 col-sm-3">
+        <h2>My Basket</h2>
+    </div>
+    <div class="col-xs-6 col-sm-9 basket" *ngIf="products && products.length">
+        <button type="button" class="btn btn-link" (click)="placeAllOrder()">Place order on all items</button>
+    </div>
+</div>
+<hr />
+<div class="row" *ngIf="products && products.length">
+    <div *ngFor="let p of products" class="col-xs-12 product">
+        <div class="pull-left"><img src="{{p.imageUrl}}" /></div>
+        <div>
+            <div class="item-info">
+                <div><h3>{{p.name}} <small>unit price: {{p.unitPrice|currency:'AUD':true}}</small></h3></div>
+                <div>Quantity: <span class="change-qty"><i class="fa fa-minus-square-o" (click)="updateQuantity(p,-1)"></i> 
+                    <span>{{p.quantity}}</span> <i class="fa fa-plus-square-o" (click)="updateQuantity(p,1)"></i></span> </div>
+                <div>Total Amount: <span>{{p.total|currency:'AUD':true}}</span></div>
+                <div>
+                    <button type="button" class="btn btn-link" (click)="placeOrder(p)">Place Order</button>
+                    <button type="button" class="btn btn-link" (click)="removeProduct(p)">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" *ngIf="hasMore"><button type="button" class="btn btn-link" (click)="showMore()">Show more</button></div>
+</div>
+<div class="row" *ngIf="!products || !products.length">
+    <div class="col-xs-12">
+        <h4>No items in your basket</h4>
+        <p>
+            Please <a asp-controller="home" asp-action="index">browse the products</a> or check your <a asp-controller="home" asp-action="orders">placed orders</a>.
+        </p>
+    </div>
+</div>

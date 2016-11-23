@@ -1,0 +1,48 @@
+﻿<div class="row">
+    <div class="col-xs-6 col-sm-3">
+        <h2>My Orders</h2>
+    </div>
+</div>
+<hr />
+<div class="row" *ngIf="orders && orders.length">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order No</th>
+                <th>Time</th>
+                <th>Items</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders">
+                <td>{{order.orderNo}}</td>
+                <td>{{order.time}}</td>
+                <td>
+                    <div></div>
+                    <table class="table details">
+                        <tr><td>Product</td><td>Quantity</td><td>Amount</td></tr>
+                        <tr *ngFor="let p of order.products">
+                            <td>{{p.item.name}}</td>
+                            <td>{{p.quantity}}</td>
+                            <td>{{p.item.unitPrice*p.quantity|currency:'AUD':true}}</td>
+                        </tr>
+                    </table>
+                    
+                </td>
+                <td>{{order.quantity}}</td>
+                <td>{{order.total|currency:'AUD':true}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="col-xs-12" *ngIf="hasMore"><button type="button" class="btn btn-link" (click)="showMore()">Show more</button></div>
+</div>
+<div class="row" *ngIf="!orders || !orders.length">
+    <div class="col-xs-12">
+        <h4>No orders placed.</h4>
+        <p>
+            Please <a asp-controller="home" asp-action="index">browse the products</a> or view your <a asp-controller="home" asp-action="basket">basket</a>.
+        </p>
+    </div>
+</div>

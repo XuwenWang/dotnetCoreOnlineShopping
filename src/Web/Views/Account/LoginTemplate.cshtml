@@ -1,0 +1,37 @@
+﻿<div>
+    <form method="post" onsubmit="return false;">
+        <div class="form-group">
+            <label class="control-label">
+                <span>User Email</span>
+                <input type="text" #emailBox class="form-control" (keyup)="emailKeyup($event)" [(ngModel)]="email" name="email" />
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">
+                <span>Password</span>
+                <input type="password" #pwdBox class="form-control" (keyup)="pwdKeyup($event)" [(ngModel)]="password" name="password" />
+            </label>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" [disabled]="!email || !password || processing" (click)="login()">
+                <span *ngIf="!processing">Login</span>
+                <span *ngIf="processing"><i class="fa fa-spin fa-spinner"></i> Loging In...</span>
+            </button>
+        </div>
+        <div *ngIf="message" class="text-danger">{{message}}</div>
+        
+        <div><br />Not a user yet? <a asp-area="" asp-controller="account" asp-action="register">Click here</a> to register.</div>
+
+        <div class="info">
+            <hr />
+            Please use <br />
+            <strong>
+            email: test@test.com<br />
+            password: 123456<br />
+            </strong>
+            to login for test. <br />
+            Or you can register a new user to start testing.
+
+        </div>
+    </form>
+</div>

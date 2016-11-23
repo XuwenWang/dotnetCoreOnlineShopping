@@ -1,0 +1,39 @@
+﻿<div class="row">
+    <div class="col-xs-6">
+        <h2>Products</h2> 
+    </div>
+    <div class="col-xs-6">
+        <div class="pull-right basket">
+            <div class="dropdown" >
+                <span class="dropdown-toggle" (mouseout)="hideBasket()" (mouseover)="showBasket()" >
+                    <i class="fa fa-shopping-basket"></i>
+                    My Basket <span class="text-muted" *ngIf="!basket.count">(empty)</span> <span *ngIf="basket.count">(items: {{basket.count}}, total: {{basket.total|currency:'AUD':true}})</span>
+                    <span class="fa fa-caret-down" *ngIf="basket.count"></span>
+                </span>
+                <ul class="dropdown-menu dropdown-menu-right" [hidden]="!onBasket && !onDropdown" (mouseover)="onDropdown=true" (mouseout)="onDropdown=false">
+                    <li><a asp-controller="home" asp-action="basket">Edit</a></li>
+                    <li><a href="#" (click)="placeAllOrder()">Place Order</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>  
+</div>
+<hr />
+<div class="row">
+    <div class="col-xs-12">
+        <input type="text" class="form-control search-product" #filter placeholder="Search Product" (keyup)="search($event.target.value)" /> 
+    </div>
+</div>
+<div class="row">
+    <div *ngFor="let p of products" class="col-xs-12 product">
+        <div class="pull-left"><img src="{{p.imageUrl}}" /></div>
+        <div class="">
+            <h3>{{p.name}} <small>{{p.unitPrice|currency:'AUD':true}}</small></h3>
+            <div>{{p.description}}</div>
+            <div class="text-right footer">
+                <button type="button" class="btn btn-link" (click)="addToBasket(p)"><i class="fa fa-plus-circle"></i> add to basket</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12" *ngIf="hasMore"><button type="button" class="btn btn-link" (click)="showMore()">Show more</button></div>

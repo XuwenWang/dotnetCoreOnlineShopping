@@ -1,0 +1,49 @@
+﻿<div *ngIf="!registered">
+    <form method="post" onsubmit="return false;">
+        <div class="form-group">
+            <label class="control-label">
+                <span>User Email <span class="mandatory" [ngClass]="{'mandatory-green':email && email.trim()}">*</span></span>
+                <input type="text" #emailBox class="form-control" (keyup)="emailKeyup($event)" [(ngModel)]="email" name="email" />
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">
+                <span>Confirm Email <span class="mandatory"  [ngClass]="{'mandatory-green':confirmEmail && confirmEmail.trim().toLowerCase()==email.trim().toLowerCase()}">*</span></span>
+                <input type="text" #confirmEmailBox class="form-control" (keyup)="confirmEmailKeyup($event)" [(ngModel)]="confirmEmail" name="confirmEmail" />
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">
+                <span>User Name <span class="mandatory"  [ngClass]="{'mandatory-green':name && name.trim()}">*</span></span>
+                <input type="text" #nameBox class="form-control" (keyup)="nameKeyup($event)" [(ngModel)]="name" name="name" />
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">
+                <span>Password <span class="mandatory"  [ngClass]="{'mandatory-green':password}">*</span></span>
+                <input type="password" #pwdBox class="form-control" (keyup)="pwdKeyup($event)" [(ngModel)]="password" name="password" />
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">
+                <span>Confirm Password <span class="mandatory"  [ngClass]="{'mandatory-green':confirmPassword && confirmPassword==password}">*</span></span>
+                <input type="password" #confirmPwdBox class="form-control" (keyup)="confirmPwdKeyup($event)" [(ngModel)]="confirmPassword" name="confirmPassword" />
+            </label>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" [disabled]="!valid() || processing" (click)="register()">
+                <span *ngIf="!processing">Register</span>
+                <span *ngIf="processing"><i class="fa fa-spin fa-spinner"></i> Regisering...</span>
+            </button>
+            <div><br />Already a user? <a asp-area="" asp-controller="account" asp-action="login">Click here</a> to login.</div>
+        </div>
+        <div *ngIf="message" class="text-danger">{{message}}</div>
+    </form>
+</div>
+<div *ngIf="registered">
+    <div class="success">
+        Congratulations, {{name}}! You have been registered successfully.<br />
+        <br />
+        Please <a asp-area="" asp-controller="account" asp-action="login">click here</a> to login.
+    </div>
+</div>
